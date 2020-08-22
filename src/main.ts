@@ -3,13 +3,13 @@ import { AppModule } from "./app.module";
 import * as helmet from "helmet";
 import * as csurf from "csurf";
 import * as rateLimit from "express-rate-limit";
-import { ValidationPipe, Logger } from "@nestjs/common";
+import { ValidationPipe } from "@nestjs/common";
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, { cors: true });
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	app.use(helmet());
-	// app.use(csurf());
+	app.enableCors();
 	app.use(
 		rateLimit({
 			windowMs: 15 * 60 * 1000, // 15 minutes
